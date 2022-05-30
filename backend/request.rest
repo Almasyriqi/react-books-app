@@ -1,0 +1,33 @@
+GET http://localhost:4000/
+
+###
+
+GET http://localhost:4000/search?query=react
+
+###
+
+GET http://localhost:4000/4
+
+###
+POST http://localhost:4000/
+Content-Type: application/json
+
+{
+    "judul": "Belajar React",
+    "penerbit": "PT Maju Jaya",
+    "penulis": "Daniel",
+    "Keterangan": "Belajar react lebih mudah dengan membaca buku ini",
+    "stok": 21,
+    "gambar": "https://via.placeholder.com/640x480.png/002244?text=Buku+ipsa"
+}
+
+###
+PATCH  http://localhost:4000/10
+Content-Type: application/json
+
+{
+    "keterangan": "Buku untuk belajar react"
+}
+
+###
+DELETE http://localhost:4000/5
