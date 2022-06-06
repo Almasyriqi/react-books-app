@@ -13,11 +13,12 @@ POST http://localhost:4000/
 Content-Type: application/json
 
 {
-    "judul": "Belajar React",
+    "judul": "Belajar React 2",
     "penerbit": "PT Maju Jaya",
-    "penulis": "Daniel",
+    "penulis": "Riqi",
     "Keterangan": "Belajar react lebih mudah dengan membaca buku ini",
-    "stok": 21,
+    "stok": 20,
+    "harga": 100000,
     "gambar": "https://via.placeholder.com/640x480.png/002244?text=Buku+ipsa"
 }
 

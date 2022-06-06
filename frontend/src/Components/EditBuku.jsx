@@ -10,6 +10,7 @@ const EditBuku = () => {
     const [penulis, setPenulis] = useState('');
     const [keterangan, setKeterangan] = useState('');
     const [stok, setStok] = useState('');
+    const [harga, setHarga] = useState('');
     const [gambar, setGambar] = useState('');
     const navigate = useNavigate();
     const { id } = useParams();
@@ -24,6 +25,7 @@ const EditBuku = () => {
                 penulis: penulis,
                 keterangan: keterangan,
                 stok: stok,
+                harga: harga,
                 gambar: `./images/${gambar[0]['name']}`
             });
 
@@ -46,7 +48,8 @@ const EditBuku = () => {
                 penerbit: penerbit,
                 penulis: penulis,
                 keterangan: keterangan,
-                stok: stok
+                stok: stok,
+                harga: harga
             });
         }
         navigate("/");
@@ -63,6 +66,7 @@ const EditBuku = () => {
         setPenulis(response.data.penulis);
         setKeterangan(response.data.keterangan);
         setStok(response.data.stok);
+        setHarga(response.data.harga);
     }
 
     return (
@@ -93,6 +97,11 @@ const EditBuku = () => {
                     <label htmlFor="stok" className="form-label">Stok</label>
                     <input type="number" className="form-control" id="stok" required
                         placeholder="Stok" value={stok} onChange={(e) => setStok(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="harga" className="form-label">Harga</label>
+                    <input type="number" className="form-control" id="harga" required
+                        placeholder="Harga" value={harga} onChange={(e) => setHarga(e.target.value)} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="gambar" className="form-label">Gambar</label>

@@ -14,6 +14,7 @@ const Modal=({show, item, onClose})=>{
                         <img src={thumbnail} alt="" />
                         <div className="info">
                             <h1>{item.judul}</h1>
+                            <h3>Rp {item.harga}</h3>
                             <h3>{item.penulis}</h3>
                             <h4>{item.publisher}</h4><br />
                         </div>

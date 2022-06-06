@@ -19,6 +19,9 @@ const Buku = db.define('buku', {
     stok:{
         type: DataTypes.INTEGER
     },
+    harga:{
+        type: DataTypes.INTEGER
+    },
     gambar:{
         type: DataTypes.STRING
     },
