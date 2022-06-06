@@ -31,3 +31,34 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:4000/5
+
+###
+POST http://localhost:4000/api/auth/signup
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "email": "admin@gmail.com",
+    "password": "12345678",
+    "roles": ["admin"]
+}
+
+###
+GET http://localhost:4000/api/test/all
+
+###
+GET http://localhost:4000/api/test/user
+
+###
+POST http://localhost:4000/api/auth/signin
+Content-Type: application/json
+
+{
+    "username": "Riqi",
+    "password": "12345678"
+}
+
+###
+GET http://localhost:4000/api/test/user
+Content-Type: application/json
+x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU0NDkzNzUwLCJleHAiOjE2NTQ1ODAxNTB9.QlLhVA1HfrYiyzi8kBug59n-FS75aQtKML7a7XBBHQY
