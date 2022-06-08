@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Main from './Components/Main';
 import { Route, Routes, Link } from 'react-router-dom';
 import AddBuku from './Components/AddBuku';
 import EditBuku from './Components/EditBuku';
@@ -14,14 +13,12 @@ import './App.css';
 import './Components/style.css';
 
 const App = () => {
-  const [showModeratorBoard, setShowModeratorBoard] = useState(false);
   const [showAdminBoard, setShowAdminBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
-      setShowModeratorBoard(user.roles.includes("ROLE_MODERATOR"));
       setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
     }
   }, []);
@@ -40,13 +37,6 @@ const App = () => {
               Home
             </Link>
           </li>
-          {showModeratorBoard && (
-            <li className="nav-item">
-              <Link to={"/main"} className="nav-link">
-                Main Board
-              </Link>
-            </li>
-          )}
           {showAdminBoard && (
             <li className="nav-item">
               <Link to={"/admin"} className="nav-link">
@@ -99,7 +89,6 @@ const App = () => {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/user" element={<BoardUser/>} />
           <Route path="/admin" element={<BoardAdmin/>} />
-          <Route path='/main' element={<Main/>}></Route>
           <Route path='/add' element={<AddBuku/>}></Route>
           <Route path='/edit/:id' element={<EditBuku/>}></Route>
         </Routes>
@@ -107,17 +96,5 @@ const App = () => {
     </div>
   );
 };
-
-// function App() {
-//   return (
-//     <Router>
-//       <Routes>
-//         <Route exact path='/' element={<Main/>}></Route>
-//         <Route path='/add' element={<AddBuku/>}></Route>
-//         <Route path='/edit/:id' element={<EditBuku/>}></Route>
-//       </Routes>
-//     </Router>
-//   );
-// }
 
 export default App;

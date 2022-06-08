@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Modal from "./Modal";
-import { Link } from "react-router-dom";
+import ButtonEdit from "./button/ButtonEdit";
+import ButtonDelete from "./button/ButtonDelete";
 
 const Card = ({ book, hapus }) => {
     const [show, setShow]=useState(false);
@@ -22,8 +23,8 @@ const Card = ({ book, hapus }) => {
                                     <div className="card-body">
                                         <h3 className="title">{item.judul}</h3>
                                         <p className="amount">Jumlah : {amount}</p>
-                                        <Link to={`/edit/${item.id}`} className='btn btn-info btn-sm'>Edit</Link>
-                                        <button onClick={() => hapus(item.id)} className="btn btn-danger btn-sm">Delete</button>
+                                        <ButtonEdit id={item.id}/>
+                                        <ButtonDelete hapus={hapus} id={item.id}/>
                                     </div>
                                 </div>
                                 <Modal show={show} item={bookItem} key={item.id} onClose={()=>setShow(false)}/>
