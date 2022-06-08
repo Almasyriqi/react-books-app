@@ -53,7 +53,7 @@ const Main=()=>{
                     <Link to="/add" className='btn btn-primary btn-lg'>Add New</Link>
                 </div>
             </div>
-            <div className="container">
+            <div className="container-buku">
                 {
                     <Card book={bookData} hapus={deleteBuku}/>
                 }
