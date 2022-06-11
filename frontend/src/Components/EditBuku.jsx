@@ -21,7 +21,7 @@ const EditBuku = () => {
         e.preventDefault();
         console.log(gambar);
         if (gambar !== '') {
-            await api.patch(`/${id}`, {
+            await api.patch(`/buku/${id}`, {
                 judul: judul,
                 penerbit: penerbit,
                 penulis: penulis,
@@ -76,7 +76,7 @@ const EditBuku = () => {
     }, []);
 
     const getBukuById = async () => {
-        const response = await api.get(`/${id}`);
+        const response = await api.get(`/buku/${id}`);
         setJudul(response.data.judul);
         setPenerbit(response.data.penerbit);
         setPenulis(response.data.penulis);

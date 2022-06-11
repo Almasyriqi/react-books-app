@@ -12,12 +12,12 @@ const Home=()=>{
     }, []);
 
     const getBuku = async () => {
-        const response = await  api.get(`/`);
+        const response = await  api.get(`/buku/`);
         setData(response.data);
     }
     const searchBook=(evt)=>{
         if(evt.key==="Enter"){
-            api.get(`/search?query=${search}`)
+            api.get(`/buku/search?query=${search}`)
             .then(res=>setData(res.data))
             .catch(err=>console.log(err))
         }
@@ -27,7 +27,7 @@ const Home=()=>{
         var yakin = window.confirm("Apakah kamu yakin menghapus buku ini?");
 
         if (yakin) {
-            await api.delete(`/${id}`);
+            await api.delete(`/buku/${id}`);
             getBuku();
         } else {
             window.alert("Baiklah :)");

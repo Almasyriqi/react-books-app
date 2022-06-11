@@ -1,19 +1,19 @@
-GET http://localhost:4000/
+GET http://localhost:4000/buku/
 
 ###
 
-GET http://localhost:4000/search?query=react
+GET http://localhost:4000/buku/search?query=react
 
 ###
 
-GET http://localhost:4000/4
+GET http://localhost:4000/buku/1
 
 ###
-POST http://localhost:4000/
+POST http://localhost:4000/buku/
 Content-Type: application/json
 
 {
-    "judul": "Belajar React 2",
+    "judul": "Belajar React 5",
     "penerbit": "PT Maju Jaya",
     "penulis": "Riqi",
     "Keterangan": "Belajar react lebih mudah dengan membaca buku ini",
@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH  http://localhost:4000/10
+PATCH  http://localhost:4000/buku/10
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:4000/5
+DELETE http://localhost:4000/buku/27
 
 ###
 POST http://localhost:4000/api/auth/signup
@@ -63,3 +63,35 @@ Content-Type: application/json
 GET http://localhost:4000/api/test/user
 Content-Type: application/json
 x-access-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU0NDkzNzUwLCJleHAiOjE2NTQ1ODAxNTB9.QlLhVA1HfrYiyzi8kBug59n-FS75aQtKML7a7XBBHQY
+
+###
+GET http://localhost:4000/transaksi/
+
+###
+GET http://localhost:4000/transaksi/user/Riqi
+
+###
+GET http://localhost:4000/transaksi/2
+
+###
+POST http://localhost:4000/transaksi/
+Content-Type: application/json
+
+{
+    "username": "Riqi",
+    "idBuku": 3,
+    "jumlah": 1,
+    "total": 300000,
+    "status": "proses"
+}
+
+###
+PATCH  http://localhost:4000/transaksi/3
+Content-Type: application/json
+
+{
+    "status": "dikirim"
+}
+
+###
+DELETE http://localhost:4000/transaksi/3

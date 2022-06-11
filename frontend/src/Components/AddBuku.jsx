@@ -42,7 +42,7 @@ const AddBuku = () => {
             data.append('file', gambar[i]);
         }
 
-        await api.post('/', {
+        await api.post('/buku/', {
             judul: judul,
             penerbit: penerbit,
             penulis: penulis,
