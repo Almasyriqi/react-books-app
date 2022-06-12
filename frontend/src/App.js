@@ -7,8 +7,9 @@ import Login from "./Components/auth/Login";
 import Register from "./Components/auth/Register";
 import Home from "./Components/Home";
 import Profile from "./Components/Profile";
-import BoardUser from "./Components/BoardUser";
-import BoardAdmin from "./Components/BoardAdmin";
+import TransaksiAdmin from "./Container/TransaksiAdmin";
+import EditTransaksiAdmin from "./Container/EditTransaksiAdmin";
+import AddTransaksiAdmin from "./Container/AddTransaksiAdmin";
 import './App.css';
 import './Components/style.css';
 
@@ -39,15 +40,8 @@ const App = () => {
           </li>
           {showAdminBoard && (
             <li className="nav-item">
-              <Link to={"/admin"} className="nav-link">
-                Admin Board
-              </Link>
-            </li>
-          )}
-          {currentUser && (
-            <li className="nav-item">
-              <Link to={"/user"} className="nav-link">
-                User
+              <Link to={"/transaksi"} className="nav-link">
+                Transaksi
               </Link>
             </li>
           )}
@@ -87,8 +81,9 @@ const App = () => {
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
-          <Route path="/user" element={<BoardUser/>} />
-          <Route path="/admin" element={<BoardAdmin/>} />
+          <Route path="/transaksi" element={<TransaksiAdmin/>} />
+          <Route path="/transaksi/add" element={<AddTransaksiAdmin/>} />
+          <Route path='/transaksi/:id' element={<EditTransaksiAdmin/>}></Route>
           <Route path='/add' element={<AddBuku/>}></Route>
           <Route path='/edit/:id' element={<EditBuku/>}></Route>
         </Routes>

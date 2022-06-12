@@ -2,6 +2,7 @@ import express from "express";
 import { createBuku, deleteBuku, getAllBuku, getBukuById, updateBuku, searchBuku } from "../controllers/buku.js";
 import { getAllTransaksi, createTransaksi, updateTransaksi,
      deleteTransaksi, getTransaksiByUsername, getTransaksiById } from "../controllers/transaksi.js";
+import { getUserById, getAllUser } from "../controllers/user.js";
 
 const router = express.Router();
 
@@ -20,5 +21,8 @@ router.get('/transaksi/:id', getTransaksiById);
 router.post('/transaksi/', createTransaksi);
 router.patch('/transaksi/:id', updateTransaksi);
 router.delete('/transaksi/:id', deleteTransaksi);
+
+router.get('/user/', getAllUser);
+router.get('/user/:id', getUserById);
 
 export default router;
