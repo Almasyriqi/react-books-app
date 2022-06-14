@@ -1,21 +1,23 @@
 import { useState, useEffect } from "react";
 import api from "../service/api";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import UserService from "../service/user-service";
+import AuthService from "../service/auth-service";
 
-const AddTransaksiAdmin = () => {
-    const [user, setUser] = useState([]);
-    const [buku, setBuku] = useState([]);
+const OrderUser = () => {
+    const [judul, setJudul] = useState('');
     const [username, setUsername] = useState('');
-    const [bukuId, setBukuId] = useState('');
+    const [harga, setHarga] = useState('');
+    const [stok, setStok] = useState('');
     const [jumlah, setJumlah] = useState('');
-    const [status, setStatus] = useState('');
+    const [gambar, setGambar] = useState('');
+    const { idBuku } = useParams();
     const navigate = useNavigate();
 
     const [content, setContent] = useState("");
     useEffect(() => {
-        UserService.getAdminBoard().then(
+        UserService.getUserBoard().then(
             (response) => {
                 setContent(response.data);
             },
@@ -33,18 +35,23 @@ const AddTransaksiAdmin = () => {
     }, []);
 
     const getUserBuku = async () => {
-        const user = await api.get(`/user/`);
-        setUser(user.data);
-        const buku = await api.get(`/buku/`);
-        setBuku(buku.data);
+        const user = AuthService.getCurrentUser();
+        console.log(user);
+        setUsername(user.username);
+        const buku = await api.get(`/buku/${idBuku}`);
+        setJudul(buku.data.judul);
+        setHarga(buku.data.harga);
+        let thumbnail = "." + buku.data.gambar;
+        setGambar(thumbnail);
+        setStok(buku.data.stok);
     }
 
-    const saveTransaksi = async (e) => {
+    const saveOrder = async (e) => {
         e.preventDefault();
+
         let hasil = 0;
-        const buku = await api.get(`/buku/${bukuId}`);
-        hasil = jumlah * buku.data.harga;
-        let stokBuku = buku.data.stok - jumlah
+        hasil = jumlah * harga;
+        let stokBuku = stok - jumlah
 
         const transaksi = await api.get(`/transaksi/user/${username}`);
 
@@ -55,7 +62,7 @@ const AddTransaksiAdmin = () => {
         var indeks = 0;
         var jumlahBuku = 0;
         for (var i = 0; i < transaksi.data.bukus.length; i++) {
-            if (transaksi.data.bukus[i].judul === buku.data.judul) {
+            if (transaksi.data.bukus[i].judul === judul) {
                 found = true;
                 indeks = i;
                 break;
@@ -80,10 +87,10 @@ const AddTransaksiAdmin = () => {
             try {
                 await api.post('/transaksi/', {
                     username: username,
-                    idBuku: bukuId,
+                    idBuku: idBuku,
                     jumlah: jumlahBuku,
                     total: hasil,
-                    status: status
+                    status: "proses"
                 });
             } catch (error) {
                 console.log(error.message);
@@ -91,36 +98,33 @@ const AddTransaksiAdmin = () => {
         }
 
         try {
-            await api.patch(`/buku/${bukuId}`, {
+            await api.patch(`/buku/${idBuku}`, {
                 stok: stokBuku
             });
         } catch (error) {
             console.log(error.message);
         }
 
-        navigate("/transaksi");
+        navigate("/");
     }
 
-    if (content === "Admin Content.") {
+    if (content === "User Content.") {
         return (
             <div className="container-sm">
-                <h2 className="head">Tambah Transaksi</h2><hr />
-                <form onSubmit={saveTransaksi}>
+                <h2 className="head">Order Buku</h2><hr />
+                <form onSubmit={saveOrder}>
                     <div className="mb-3">
-                        <label htmlFor="user" className="form-label">User</label>
-                        <select className="form-select" aria-label="Default select example" id="user"
-                            required onChange={(e) => setUsername(e.target.value)}>
-                            <option selected disabled value="">--Pilih User--</option>
-                            {user.map(({ id, username }, index) => <option key={id} value={username} >{username}</option>)}
-                        </select>
+                        <img src={gambar} alt="" width={100} height={200} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="buku" className="form-label">Buku</label>
-                        <select className="form-select" aria-label="Default select example" id="buku"
-                            required onChange={(e) => setBukuId(e.target.value)}>
-                            <option selected disabled value="">--Pilih Buku--</option>
-                            {buku.map(({ id, judul }, index) => <option key={id} value={id} >{judul}</option>)}
-                        </select>
+                        <label htmlFor="judul" className="form-label">Judul</label>
+                        <input type="text" className="form-control" id="judul" disabled
+                            value={judul} onChange={(e) => { }} />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="harga" className="form-label">Harga</label>
+                        <input type="number" className="form-control" id="harga" disabled
+                            value={harga} onChange={(e) => { }} />
                     </div>
                     <div className="mb-3">
                         <label htmlFor="jumlah" className="form-label">Jumlah</label>
@@ -128,18 +132,13 @@ const AddTransaksiAdmin = () => {
                             placeholder="Jumlah" value={jumlah} onChange={(e) => setJumlah(e.target.value)} />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="status" className="form-label">Status</label>
-                        <select className="form-select" aria-label="Default select example" id="status"
-                            required onChange={(e) => setStatus(e.target.value)}>
-                            <option selected disabled value="">--Pilih Status--</option>
-                            <option value="proses">Proses</option>
-                            <option value="dikirim">Dikirim</option>
-                            <option value="terkirim">Terkirim</option>
-                        </select>
+                        <label htmlFor="total" className="form-label">Total</label>
+                        <input type="number" className="form-control" id="total" disabled
+                            placeholder="Total" value={jumlah * harga} onChange={(e) => { }} />
                     </div>
                     <div className="mb-3">
                         <button className="btn btn-primary btn-lg">Save</button>
-                        <Link to={'/transaksi/'} className='btn btn-danger btn-lg'>Cancel</Link>
+                        <Link to={'/'} className='btn btn-danger btn-lg'>Cancel</Link>
                     </div>
                 </form>
             </div>
@@ -155,4 +154,4 @@ const AddTransaksiAdmin = () => {
         );
     }
 }
-export default AddTransaksiAdmin;
+export default OrderUser;

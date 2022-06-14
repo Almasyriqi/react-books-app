@@ -10,17 +10,25 @@ import Profile from "./Components/Profile";
 import TransaksiAdmin from "./Container/TransaksiAdmin";
 import EditTransaksiAdmin from "./Container/EditTransaksiAdmin";
 import AddTransaksiAdmin from "./Container/AddTransaksiAdmin";
+import HistoryUser from "./Container/HistoryUser";
+import OrderUser from "./Container/OrderUser";
 import './App.css';
 import './Components/style.css';
 
 const App = () => {
   const [showAdminBoard, setShowAdminBoard] = useState(false);
+  const [showUserBoard, setShowUserBoard] = useState(false);
   const [currentUser, setCurrentUser] = useState(undefined);
   useEffect(() => {
     const user = AuthService.getCurrentUser();
     if (user) {
       setCurrentUser(user);
-      setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      if(user.roles[0] == "ROLE_ADMIN"){
+        setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+      }
+      else {
+        setShowUserBoard(user.roles.includes("ROLE_USER"));
+      }
     }
   }, []);
   const logOut = () => {
@@ -42,6 +50,13 @@ const App = () => {
             <li className="nav-item">
               <Link to={"/transaksi"} className="nav-link">
                 Transaksi
+              </Link>
+            </li>
+          )}
+          {showUserBoard && (
+            <li className="nav-item">
+              <Link to={"/history"} className="nav-link">
+                History
               </Link>
             </li>
           )}
@@ -81,9 +96,11 @@ const App = () => {
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/history" element={<HistoryUser/>} />
           <Route path="/transaksi" element={<TransaksiAdmin/>} />
           <Route path="/transaksi/add" element={<AddTransaksiAdmin/>} />
           <Route path='/transaksi/:id' element={<EditTransaksiAdmin/>}></Route>
+          <Route path='/order/:idBuku' element={<OrderUser/>}></Route>
           <Route path='/add' element={<AddBuku/>}></Route>
           <Route path='/edit/:id' element={<EditBuku/>}></Route>
         </Routes>

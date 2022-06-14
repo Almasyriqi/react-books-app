@@ -45,7 +45,7 @@ const EditBuku = () => {
                     console.log(e);
                 });
         } else {
-            await api.patch(`/${id}`, {
+            await api.patch(`/buku/${id}`, {
                 judul: judul,
                 penerbit: penerbit,
                 penulis: penulis,

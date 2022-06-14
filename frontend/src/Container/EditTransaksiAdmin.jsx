@@ -57,13 +57,26 @@ const EditTransaksiAdmin = () => {
     const updateTransaksi = async (e) => {
         e.preventDefault();
 
-        let hasil = 0;
+        let hasil = 0, jumlahBuku = 0;
         const buku = await api.get(`/buku/${bukuId}`);
-        hasil = jumlah * buku.data.harga;
+        let stokBuku = buku.data.stok;
+        let inputJumlah = jumlah;
+        hasil = inputJumlah * buku.data.harga;
         console.log(hasil);
-        console.log(username);
 
         const response = await api.get(`/transaksi/${id}`);
+
+        if(response.data.jumlah > jumlah){
+            jumlahBuku = response.data[0].jumlah - inputJumlah;
+            stokBuku += jumlahBuku;
+        } else {
+            jumlahBuku = inputJumlah - response.data[0].jumlah;
+            stokBuku -= jumlahBuku;
+        }
+        
+        console.log(jumlahBuku);
+        console.log(stokBuku);
+
         if(response.data.jumlah !== jumlah) {
             try {
                 await api.patch(`/transaksi/${id}`, {
@@ -72,6 +85,14 @@ const EditTransaksiAdmin = () => {
                     jumlah: jumlah,
                     total: hasil,
                     status: status
+                });
+            } catch (error) {
+                console.log(error.message);
+            }
+
+            try {
+                await api.patch(`/buku/${bukuId}`, {
+                    stok: stokBuku
                 });
             } catch (error) {
                 console.log(error.message);
@@ -87,7 +108,6 @@ const EditTransaksiAdmin = () => {
                 console.log(error.message);
             }
         }
-
         navigate("/transaksi");
     }
 

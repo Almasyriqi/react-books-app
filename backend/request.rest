@@ -77,7 +77,7 @@ GET http://localhost:4000/transaksi/
 GET http://localhost:4000/transaksi/user/Riqi
 
 ###
-GET http://localhost:4000/transaksi/2
+GET http://localhost:4000/transaksi/7
 
 ###
 POST http://localhost:4000/transaksi/
