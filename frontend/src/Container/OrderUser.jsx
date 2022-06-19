@@ -49,7 +49,8 @@ const OrderUser = () => {
     const saveOrder = async (e) => {
         e.preventDefault();
 
-        let hasil = 0;
+        if(jumlah <= stok && jumlah > 0){
+            let hasil = 0;
         hasil = jumlah * harga;
         let stokBuku = stok - jumlah
 
@@ -106,6 +107,10 @@ const OrderUser = () => {
         }
 
         navigate("/");
+        }
+        else {
+            window.alert("Jumlah Tidak Sesuai");
+        }
     }
 
     if (content === "User Content.") {
